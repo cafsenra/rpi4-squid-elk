@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: logstash-deployment
-  namespace: default
+  namespace: elk
   labels:
     name: logstash
 spec:
@@ -41,10 +41,7 @@ spec:
             ### to ensure that ElacticSearch is up and running.
             postStart:
               exec:
-                command: ["sleep 5"]
-                command: ["sh", "-c", "curl -XPUT http://elasticsearch-svc.default.svc.cluster.local:9200/_template/squid-access \
-                -H 'Content-Type: application/json' \
-                -d '@/usr/share/logstash/squid-access-logstash-template.json'"]
+                command: ["sh", "-c", "sleep 5 && curl -XPUT http://elasticsearch-svc.default.svc.cluster.local:9200/_template/squid-access -H 'Content-Type: application/json' -d '@/usr/share/logstash/squid-access-logstash-template.json'"]
       volumes:
         - name: logstash-conf
           configMap:

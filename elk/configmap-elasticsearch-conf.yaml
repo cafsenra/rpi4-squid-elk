@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: elasticsearch-conf
-  namespace: default
+  namespace: elk
   labels:
     app: elasticsearch
 data:
@@ -16,7 +16,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: elasticsearch-jvm
-  namespace: default
+  namespace: elk
   labels:
     app: elasticsearch
 data:

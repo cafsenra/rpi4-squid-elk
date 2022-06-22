@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: elasticsearch-deployment
-  namespace: default
+  namespace: elk
   labels:
     name: elasticsearch
 spec:
@@ -21,9 +21,15 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: ELASTIC_PASSWORD
-              value: "elasticPass"
+              valueFrom:
+                    secretKeyRef:
+                        name: elastic-password
+                        key: elastic-password
             - name: KEYSTORE_PASSWORD
-              value: "keystorePass"
+              valueFrom:
+                    secretKeyRef:
+                        name: keystore-password
+                        key: keystore-password
           volumeMounts:
             - name: elasticsearch-conf
               mountPath: /usr/share/elasticsearch/config/elasticsearch.yml
